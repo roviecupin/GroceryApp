@@ -1,11 +1,20 @@
 import 'package:flutter/material.dart';
-import 'package:grocery_app/app_drawer.dart';
-import 'package:grocery_app/info.dart';
-import 'package:grocery_app/newsstand.dart';
-import 'package:grocery_app/shop.dart';
+import 'package:my_grocery_app/app_drawer.dart';
+import 'package:my_grocery_app/cart.dart';
+import 'package:my_grocery_app/info.dart';
+import 'package:my_grocery_app/newsstand.dart';
+import 'package:my_grocery_app/shop.dart';
+import 'package:my_grocery_app/profile.dart';
+import 'package:my_grocery_app/provider.dart';
+import 'package:provider/provider.dart';
 
 void main() {
-  runApp(const MyApp());
+  runApp(
+    ChangeNotifierProvider(
+      create: (context) => CartProvider(),
+      child: const MyApp(),
+    ),
+  );
 }
 
 class MyApp extends StatelessWidget {
@@ -16,14 +25,17 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Flutter Demo',
       debugShowCheckedModeBanner: false,
-      theme: ThemeData(      
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
+      theme: ThemeData(
+        colorScheme: ColorScheme.fromSeed(seedColor: Colors.pink),
       ),
       home: const MyHomePage(title: 'Flutter Demo Home Page'),
-      routes: {'/shop': (context) => const Shop(),
-              '/newsstand': (context) => const Newsstand(),
-              '/info': (context) => const Info(),
-              },
+      routes: {
+        '/shop': (context) => const Shop(),
+        '/newsstand': (context) => const Newsstand(),
+        '/info': (context) => const Info(),
+        '/cart': (context) => const Cart(),
+        '/profile': (context) => const Profile(),
+      },
     );
   }
 }
@@ -38,15 +50,12 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
- 
- @override
- Widget build(BuildContext context){
-  return Scaffold(
-    appBar: AppBar(
-      title: Text('My Grocery'),
-    ),
-    drawer: AppDrawer(),
-    body: Center(),
-  );
- }
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(title: Text('My Grocery')),
+      drawer: AppDrawer(),
+      body: Center(),
+    );
+  }
 }
